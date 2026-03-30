@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fade To Black — Premium Window Tinting</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --off-white: #f2f0eb;
+    --silver: #a8a8a8;
+    --light-gray: #d4d4d4;
+    --mid-gray: #2a2a2a;
+    --border: #1e1e1e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--black);
+    color: var(--off-white);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.08em;
+    color: var(--off-white);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--silver);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--off-white); }
+
+  .nav-cta {
+    background: var(--off-white);
+    color: var(--black) !important;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-weight: 500 !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.85) 100%),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.015) 2px,
+        rgba(255,255,255,0.015) 4px
+      );
+    background-color: #111;
+  }
+
+  /* Simulated tinted car window effect */
+  .hero-visual {
+    position: absolute;
+    top: 80px;
+    right: -40px;
+    width: 60%;
+    height: 70%;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 40%, #1f1f1f 100%);
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 30%);
+    opacity: 0.7;
+  }
+
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(180,180,180,0.08) 0%, transparent 50%, rgba(255,255,255,0.03) 100%);
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--silver);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 140px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  h1 span {
+    display: block;
+    color: var(--silver);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--silver);
+    max-width: 440px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--off-white);
+    color: var(--black);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #ddd; transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--silver);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--off-white); }
+
+  .btn-ghost::after {
+    content: '→';
+    font-size: 16px;
+  }
+
+  /* STATS BAR */
+  .stats {
+    background: var(--mid-gray);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .stat {
+    flex: 1;
+    max-width: 220px;
+    padding: 28px 32px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 0.04em;
+    color: var(--off-white);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-top: 6px;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 100px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--off-white);
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--silver);
+    max-width: 300px;
+    text-align: right;
+    line-height: 1.7;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: #0f0f0f;
+    border: 1px solid var(--border);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover { background: #141414; }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--light-gray), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: #333;
+    margin-bottom: 32px;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.04em;
+    color: var(--off-white);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    color: var(--silver);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .service-price {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--light-gray);
+    letter-spacing: 0.05em;
+  }
+
+  /* WHY US */
+  .why {
+    padding: 100px 48px;
+    background: #0c0c0c;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .why-left h2 { margin-bottom: 20px; }
+
+  .why-left p {
+    font-size: 15px;
+    color: var(--silver);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  .why-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .why-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .why-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .why-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--off-white);
+    margin-bottom: 3px;
+  }
+
+  .why-text span {
+    font-size: 13px;
+    color: var(--silver);
+    line-height: 1.5;
+  }
+
+  .why-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .why-block {
+    background: #111;
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .why-block-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--off-white);
+    line-height: 1;
+    display: block;
+  }
+
+  .why-block-label {
+    font-size: 12px;
+    color: var(--silver);
+    margin-top: 4px;
+  }
+
+  /* QUOTE SECTION */
+  .quote-section {
+    padding: 100px 48px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .quote-section .section-tag { text-align: center; }
+  .quote-section h2 { text-align: center; margin-bottom: 48px; }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 8px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--off-white);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #444;
+  }
+
+  select option { background: #111; }
+
+  textarea { resize: vertical; min-height: 100px; }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--off-white);
+    color: var(--black);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+
+  .submit-btn:hover { background: #ddd; }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--off-white);
+    margin-bottom: 6px;
+  }
+
+  .footer-sub {
+    font-size: 12px;
+    color: #444;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #444;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--silver); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
+  .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Fade To Black</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#quote">Contact</a></li>
+    <li><a href="#quote" class="nav-cta">Get a Quote</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-visual"></div>
+  <div class="hero-tag">Premium Window Tinting</div>
+  <h1>Fade<span>To Black.</span></h1>
+  <p class="hero-sub">Professional window tinting for your car, truck, or SUV. Heat rejection, UV protection, and a look that turns heads.</p>
+  <div class="hero-actions">
+    <a href="#quote" class="btn-primary">Get a Free Quote</a>
+    <a href="#services" class="btn-ghost">View Services</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Cars Tinted</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">99%</div>
+    <div class="stat-label">UV Rejection</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5★</div>
+    <div class="stat-label">Avg. Rating</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5yr</div>
+    <div class="stat-label">Warranty</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div>
+      <div class="section-tag">What We Offer</div>
+      <h2>Our Services</h2>
+    </div>
+    <p class="section-desc">Every install uses premium film with lifetime manufacturer backing.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Automotive Tint</div>
+      <p class="service-desc">Full vehicle window tinting using ceramic or dyed film. Heat rejection up to 60%, scratch resistant, and bubble-free.</p>
+      <div class="service-price">Starting at $199</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Ceramic Film</div>
+      <p class="service-desc">Top-tier ceramic technology that blocks infrared heat without interfering with GPS, radio, or phone signals.</p>
+      <div class="service-price">Starting at $349</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Paint Protection</div>
+      <p class="service-desc">Clear PPF film that shields your paint from rock chips, scratches, and road debris — completely invisible.</p>
+      <div class="service-price">Starting at $499</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-left">
+    <div class="section-tag">Why Choose Us</div>
+    <h2>Built on Precision</h2>
+    <p>We don't cut corners. Every job is done in a climate-controlled bay with computer-cut film and inspected before you drive off.</p>
+    <ul class="why-list">
+      <li class="why-item">
+        <div class="why-icon">✦</div>
+        <div class="why-text">
+          <strong>Computer-cut film</strong>
+          <span>No hand-cutting means cleaner edges and no gaps.</span>
+        </div>
+      </li>
+      <li class="why-item">
+        <div class="why-icon">✦</div>
+        <div class="why-text">
+          <strong>Climate-controlled bay</strong>
+          <span>Dust-free environment for a flawless install every time.</span>
+        </div>
+      </li>
+      <li class="why-item">
+        <div class="why-icon">✦</div>
+        <div class="why-text">
+          <strong>5-year warranty</strong>
+          <span>We stand behind our work, no questions asked.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="why-right">
+    <div class="why-block">
+      <span class="why-block-num">8+</span>
+      <div class="why-block-label">Years in business</div>
+    </div>
+    <div class="why-block">
+      <span class="why-block-num">1 day</span>
+      <div class="why-block-label">Typical turnaround</div>
+    </div>
+    <div class="why-block">
+      <span class="why-block-num">3M</span>
+      <div class="why-block-label">Certified installer</div>
+    </div>
+    <div class="why-block">
+      <span class="why-block-num">100%</span>
+      <div class="why-block-label">Satisfaction rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE FORM -->
+<section id="quote">
+  <div class="quote-section">
+    <div class="section-tag" style="text-align:center; margin-bottom:12px;">Free Estimate</div>
+    <h2>Get a Quote</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" placeholder="John">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" placeholder="Smith">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" placeholder="(555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="john@email.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Vehicle</label>
+      <input type="text" placeholder="2022 Toyota Camry">
+    </div>
+    <div class="form-group">
+      <label>Service Interested In</label>
+      <select>
+        <option>Automotive Tint</option>
+        <option>Ceramic Film</option>
+        <option>Paint Protection Film</option>
+        <option>Not Sure — Need Advice</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Additional Notes</label>
+      <textarea placeholder="Any specific requests or questions..."></textarea>
+    </div>
+    <button class="submit-btn">Submit Request</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Fade To Black</div>
+    <div class="footer-sub">Premium Window Tinting · Est. 2016</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#quote">Contact</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
