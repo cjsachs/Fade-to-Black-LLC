@@ -547,6 +547,150 @@
   h1 { animation: fadeUp 0.6s 0.1s ease both; }
   .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
   .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+
+  /* MOBILE NAV TOGGLE */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: var(--off-white);
+    transition: all 0.3s;
+  }
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 768px) {
+    nav {
+      padding: 16px 24px;
+    }
+
+    .nav-toggle { display: flex; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 61px;
+      left: 0; right: 0;
+      background: rgba(8,8,8,0.97);
+      flex-direction: column;
+      gap: 0;
+      padding: 8px 0 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links li { width: 100%; }
+
+    .nav-links a {
+      display: block;
+      padding: 14px 24px;
+      font-size: 14px;
+    }
+
+    .nav-cta {
+      margin: 8px 24px 0;
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    .hero {
+      padding: 0 24px 64px;
+      min-height: 100svh;
+    }
+
+    .hero-visual { display: none; }
+
+    .stats {
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      flex: 1 1 50%;
+      max-width: 50%;
+      padding: 20px 16px;
+    }
+
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(3) { border-top: 1px solid var(--border); }
+    .stat:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+
+    .services {
+      padding: 64px 24px;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .section-desc {
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .service-card {
+      padding: 28px 24px;
+    }
+
+    .why {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 64px 24px;
+    }
+
+    .why-right {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .quote-section {
+      padding: 64px 24px;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-bottom: 0;
+    }
+
+    .form-row .form-group {
+      margin-bottom: 16px;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 24px;
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .footer-links {
+      gap: 20px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .stat {
+      flex: 1 1 100%;
+      max-width: 100%;
+      border-right: none !important;
+      border-top: 1px solid var(--border);
+    }
+    .stat:first-child { border-top: none; }
+  }
 </style>
 </head>
 <body>
@@ -554,12 +698,15 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Fade To Black</div>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#quote">Contact</a></li>
-    <li><a href="#quote" class="nav-cta">Get a Quote</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services" onclick="closeNav()">Services</a></li>
+    <li><a href="#why" onclick="closeNav()">Why Us</a></li>
+    <li><a href="#quote" onclick="closeNav()">Contact</a></li>
+    <li><a href="#quote" class="nav-cta" onclick="closeNav()">Get a Quote</a></li>
   </ul>
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -735,5 +882,13 @@
   </ul>
 </footer>
 
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function closeNav() {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+</script>
 </body>
 </html>
